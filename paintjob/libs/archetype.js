@@ -250,12 +250,18 @@
 		},
 	});
 
+/*
 	hideSchematics = function(){
 		var css = document.createElement("style");
 		css.type = "text/css";
 		css.innerHTML = '[data-schematic]{display :none !important;}';
+
+		alert(typeof document.body);
+
 		document.body.appendChild(css);
 	}();
+
+	*/
 })();
 
 

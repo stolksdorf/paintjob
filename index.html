@@ -1,5 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+
+
+</head>
+
 <body>
 	<div class='container' data-block='project'>
 		<div class='sideBar' data-block='sideBar'>
@@ -9,7 +14,6 @@
 			</div>
 			<div class='sideBar__nav' data-element='nav'></div>
 		</div>
-
 		<div class='project'>
 			<div class='project__main'>
 				<div class='project__name'             data-element='name'></div>
@@ -73,42 +77,140 @@
 
 </body>
 
-	<!-- Libraries -->
-	<script type="text/javascript" src="libs/jq.js"></script>
-	<script type="text/javascript" src="libs/underscore.js"></script>
-	<script type="text/javascript" src="libs/moment.js"></script>
-	<script type="text/javascript" src="libs/archetype.js"></script>
-	<script type="text/javascript" src="libs/markdownconvertor.js"></script>
-	<link rel="stylesheet" href="libs/FontAwesome/font-awesome.min.css">
-	<link rel="Stylesheet" type="text/css" href="libs/hint.css" />
+<!-- Libraries -->
+<script type="text/javascript" src="paintjob/libs/jq.js"></script>
+<script type="text/javascript" src="paintjob/libs/underscore.js"></script>
+<script type="text/javascript" src="paintjob/libs/moment.js"></script>
+<script type="text/javascript" src="paintjob/libs/archetype.js"></script>
+<script type="text/javascript" src="paintjob/libs/markdownconvertor.js"></script>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link rel="Stylesheet" type="text/css" href="paintjob/libs/hint.css" />
+
+<!-- CodeMirror -->
+<script src="paintjob/libs/codemirror/cm.js"></script>
+<link  href="paintjob/libs/codemirror/cm.css" rel="stylesheet">
+<script src="paintjob/libs/codemirror/javascript.js"></script>
+
+<!-- Fonts -->
+<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+
+<!-- Style -->
+<link rel="Stylesheet" type="text/css" href="paintjob/style/reset.css" />
+<link rel="Stylesheet" type="text/css" href="paintjob/style/base.css" />
+<link rel="Stylesheet" type="text/css" href="paintjob/style/paintjob.css" />
+
+<script type="text/javascript" src="paintjob/block/Project.js"></script>
+<script type="text/javascript" src="paintjob/block/Icon.js"></script>
+<script type="text/javascript" src="paintjob/block/Codeblock.js"></script>
+<script type="text/javascript" src="paintjob/block/Sidebar.js"></script>
+
+<script type="text/javascript" src="paintjob/paintjob.js"></script>
 
 
-	<!-- CodeMirror -->
-	<script src="libs/codemirror/cm.js"></script>
-	<link  href="libs/codemirror/cm.css" rel="stylesheet">
-	<script src="libs/codemirror/javascript.js"></script>
 
 
-	<!-- Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-
-	<!-- Style -->
-	<link rel="Stylesheet" type="text/css" href="style/reset.css" />
-	<link rel="Stylesheet" type="text/css" href="style/base.css" />
-	<link rel="Stylesheet" type="text/css" href="style/paintjob.css" />
 
 
-	<script type="text/javascript" src="block/Project.js"></script>
-	<script type="text/javascript" src="block/Icon.js"></script>
-	<script type="text/javascript" src="block/Codeblock.js"></script>
-	<script type="text/javascript" src="block/Sidebar.js"></script>
 
 
-	<script type="text/javascript" src="PROJECT.js"></script>
-	<script type="text/javascript" src="index.js"></script>
+
+
+
+
+
+<!-- CUSTOM CODE HERE -->
+
+
+
+<div data-schematic='code_html'>
+	<div class="test" style="color:blue">sadasd</div>
+</div>
+
+<div data-schematic='example_html'>
+	<div class="test2">Test 2</div><div class="test1">Test 1</div>
+</div>
+
+
+
+
+
+
 
 	<script>
-		Project = Object.create(PaintJob_Block_Project).initialize(PROJECT);
+		//Put your project definitions here
+
+		CreatePaintJob({
+			user :'stolksdorf',
+			repo :'parallaxjs',
+
+			logo_class : 'icon-exchange',
+			logo_color : 'blue',
+
+			icons : [
+				{
+					icon_class : 'icon-code-fork',
+					color      : 'green',
+					//link       : function(){return 'https://github.com/' + PROJECT.user + '/' + PROJECT.repo + '/fork';},
+					link       : 'https://github.com/stolksdorf/Parallaxjs/fork',
+					tooltip    : 'Fork on Github'
+				},
+				/*{
+					icon_class : 'icon-star',
+					color      : 'yellow',
+					link       : 'https://github.com/stolksdorf/Parallaxjs/star',
+					tooltip    : 'Star on Github'
+				}, */
+				{
+					icon_class : 'icon-code',
+					color      : 'steel',
+					link       : 'https://raw.github.com/stolksdorf/Parallaxjs/master/parallax.js',
+					tooltip    : 'View raw'
+				},
+				{
+					icon_class : 'icon-home',
+					color      : 'red',
+					link       : 'https://github.com/stolksdorf',
+					//link       : function(){return 'https://github.com/' + PROJECT.user;},
+					tooltip    : 'Check out more cool things'
+				}
+
+			],
+
+			//Remove
+			//use_local : true,
+
+
+			/* Side Example */
+
+			//example_html  : '',
+			example_start_function : function(){
+
+				$('.test2').hide();
+
+				var flip = true;
+
+				setInterval(function(){
+					if(flip){
+						$('.test2').hide();
+						$('.test1').show();
+					} else {
+						$('.test1').hide();
+						$('.test2').show();
+					}
+
+					flip = !flip;
+				}, 2000)
+			},
+
+
+			/* Code Blocks */
+
+			runnable_code_blocks : true,
+			show_html_example : true,
+			//code_block_html : '<div class="test" style="color:blue">sadasd</div>'
+
+
+		});
 	</script>
 
 </html>

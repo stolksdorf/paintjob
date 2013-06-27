@@ -1,6 +1,3 @@
-
-//Move somewhere else
-
 jQuery.fn.sticky = function(topOverride){
 	var element = this;
 	var oldTop = topOverride || element.offset().top;
@@ -32,3 +29,10 @@ jQuery.fn.scrollTo = function(duration){
 	$('html, body').animate({scrollTop: $(this).offset().top}, duration);
 };
 
+
+
+
+
+CreatePaintJob = function(projectData){
+	return Object.create(PaintJob_Block_Project).initialize(projectData);
+};
