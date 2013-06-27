@@ -31,6 +31,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			}
 		});
 
+		//Used for testing if I want to grab the local readme.md instead of the repos
 		if(this.projectData.use_local){
 			$.get('readme.md', function(result){
 				self.projectData.readme = result;
@@ -45,6 +46,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			headers: { 'Accept': 'application/vnd.github.raw' },
 			error  : function(result){
 				console.error(result.responseText);
+				alert('There was an error gathering the repo readme\n\n' + result.responseText);
 			},
 			success : function(result){
 				self.projectData.readme = result;
