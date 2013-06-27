@@ -145,6 +145,8 @@
 			logo_class : 'icon-exchange',
 			logo_color : 'blue',
 
+
+			/* Project Icons */
 			icons : [
 				{
 					icon_class : 'icon-code-fork',
@@ -179,10 +181,12 @@
 			use_local : true,
 
 
-			/* Side Example */
+			/* Code Blocks */
+			runnable_code_blocks : true,
+			show_html_example    : true,
 
-			//example_html  : '',
-			example_start_function : function(){
+			/* Example */
+			example_initialize : function(){
 
 				$('.test2').hide();
 
@@ -202,11 +206,7 @@
 			},
 
 
-			/* Code Blocks */
 
-			runnable_code_blocks : true,
-			show_html_example : true,
-			//code_block_html : '<div class="test" style="color:blue">sadasd</div>'
 
 
 		});

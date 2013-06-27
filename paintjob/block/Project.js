@@ -104,11 +104,13 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 
 	buildExample : function()
 	{
-		if(this.projectData.example_html){
-			this.dom.example.html(this.projectData.example_html);
+		exampleHtml =jQuery('[data-schematic="example_html"]').html();
+
+		if(exampleHtml && exampleHtml !== ""){
+			this.dom.example.html(exampleHtml);
 		}
-		if(typeof this.projectData.example_start_function === 'function'){
-			this.projectData.example_start_function();
+		if(typeof this.projectData.example_initialize === 'function'){
+			this.projectData.example_initialize();
 		}
 
 		return this;
