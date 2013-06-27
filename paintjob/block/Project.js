@@ -23,6 +23,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			type : 'GET',
 			error  : function(result){
 				console.error(result.responseText);
+				alert('There was an error gathering the repo data\n\n' + result.responseText);
 			},
 			success : function(result){
 				self.projectData.name        = result.name;
