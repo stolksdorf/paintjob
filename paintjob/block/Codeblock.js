@@ -55,7 +55,7 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 
 		codeBlockHtml =jQuery('[data-schematic="code_html"]').html();
 
-		if(codeBlockHtml){
+		if(codeBlockHtml && codeBlockHtml !== ""){
 			this.dom.output.html(codeBlockHtml)
 			this.dom.outputContainer.show();
 		} else{
@@ -68,7 +68,6 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 			self.dom.outputContainer.show();
 			self.dom.output.html('<div class="codeblock__output__errorText">' + e.toString() + '</div>');
 		}
-
 
 		return this;
 	},
