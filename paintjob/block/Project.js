@@ -1,4 +1,3 @@
-
 PaintJob_Block_Project = Object.create(Block).blueprint({
 	block : 'project',
 
@@ -12,7 +11,6 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 		this.fetchRepoData();
 		return this;
 	},
-
 
 	fetchRepoData : function()
 	{

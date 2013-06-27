@@ -112,13 +112,25 @@
 
 
 <!-- This html will be use for each code example in your project -->
-<div data-schematic='code_html'>
-	<div class="test" style="color:blue">sadasd</div>
-</div>
+<div data-schematic='code_html'></div>
 
 <!-- This html will be use for the example at the top of the page -->
 <div data-schematic='example_html'>
-	<div class="test2">Test 2</div><div class="test1">Test 1</div>
+	<div class='exampleContainer' style='height:224px;width:224px;overflow:hidden;margin-left:50px;'>
+		<div class='exampleBox' style='width:600px;'>
+			<div style='vertical-align:middle;display:inline-block'>
+				<i class='icon-github' style='font-size:65px;margin-left:22px;'></i>
+				<i class='icon-plus'   style='font-size:30px;margin-left:14px;display:inline-block;margin-top:-30px;vertical-align:middle'></i>
+				<i class='icon-code'   style='font-size:65px;margin-left:14px;'></i>
+			</div>
+			<div style='vertical-align:middle;display:inline-block;font-size:60px;margin-left:50px;'>
+				<i class='icon-arrow-right'></i>
+			</div>
+			<div style='vertical-align:middle;display:inline-block;font-size:150px;margin-left:50px;'>
+				<i class='icon-rocket'></i>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -126,37 +138,24 @@
 		//use_local : true,
 
 		user :'stolksdorf',
-		repo :'parallaxjs',
+		repo :'paintjob',
 
-		logo_class : 'icon-exchange',
-		logo_color : 'blue',
-
+		logo_class : 'icon-tint',
+		logo_color : 'orange',
 
 		/* Project Icons */
 		icons : [
 			{
+				icon_class : 'icon-github',
+				color      : 'blue',
+				link       : 'https://github.com/stolksdorf/Paintjob',
+				tooltip    : 'View on Github'
+			},
+			{
 				icon_class : 'icon-code-fork',
 				color      : 'green',
-				link       : 'https://github.com/stolksdorf/Parallaxjs/fork',
+				link       : 'https://github.com/stolksdorf/Paintjob/fork',
 				tooltip    : 'Fork on Github'
-			},
-			/*{
-				icon_class : 'icon-star',
-				color      : 'yellow',
-				link       : 'https://github.com/stolksdorf/Parallaxjs/star',
-				tooltip    : 'Star on Github'
-			}, */
-			{
-				icon_class : 'icon-star',
-				color      : 'yellow',
-				link       : 'https://github.com/stolksdorf/Parallaxjs/star',
-				tooltip    : 'Star on Github'
-			},
-			{
-				icon_class : 'icon-code',
-				color      : 'steel',
-				link       : 'https://raw.github.com/stolksdorf/Parallaxjs/master/parallax.js',
-				tooltip    : 'View raw'
 			},
 			{
 				icon_class : 'icon-home',
@@ -173,22 +172,22 @@
 
 		/* Example */
 		example_initialize : function(){
-
-			$('.test2').hide();
-
-			var flip = true;
-
-			setInterval(function(){
-				if(flip){
-					$('.test2').hide();
-					$('.test1').show();
-				} else {
-					$('.test1').hide();
-					$('.test2').show();
-				}
-
-				flip = !flip;
-			}, 2000)
+			$('.exampleBox').hide();
+			var moveExample = function(){
+				$('.exampleBox')
+					.delay(1000)
+					.css('marginLeft', '0px')
+					.fadeIn()
+					.delay(3000)
+					.animate({
+						marginLeft : '-328px'
+					}, 1500)
+					.delay(5000)
+					.fadeOut(400, function(){
+						moveExample();
+					});
+			};
+			moveExample();
 		},
 	});
 </script>
