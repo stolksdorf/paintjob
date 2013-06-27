@@ -1,4 +1,3 @@
-
 PaintJob_Block_Project = Object.create(Block).blueprint({
 	block : 'project',
 
@@ -13,7 +12,6 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 		return this;
 	},
 
-
 	fetchRepoData : function()
 	{
 		var self = this;
@@ -23,6 +21,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			type : 'GET',
 			error  : function(result){
 				console.error(result.responseText);
+				alert('There was an error gathering the repo data\n\n' + result.responseText);
 			},
 			success : function(result){
 				self.projectData.name        = result.name;
@@ -32,6 +31,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			}
 		});
 
+		//Used for testing if I want to grab the local readme.md instead of the repos
 		if(this.projectData.use_local){
 			$.get('readme.md', function(result){
 				self.projectData.readme = result;
@@ -46,6 +46,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			headers: { 'Accept': 'application/vnd.github.raw' },
 			error  : function(result){
 				console.error(result.responseText);
+				alert('There was an error gathering the repo readme\n\n' + result.responseText);
 			},
 			success : function(result){
 				self.projectData.readme = result;
@@ -104,11 +105,13 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 
 	buildExample : function()
 	{
-		if(this.projectData.example_html){
-			this.dom.example.html(this.projectData.example_html);
+		exampleHtml =jQuery('[data-schematic="example_html"]').html();
+
+		if(exampleHtml && exampleHtml !== ""){
+			this.dom.example.html(exampleHtml);
 		}
-		if(typeof this.projectData.example_start_function === 'function'){
-			this.projectData.example_start_function();
+		if(typeof this.projectData.example_initialize === 'function'){
+			this.projectData.example_initialize();
 		}
 
 		return this;
