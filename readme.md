@@ -1,3 +1,5 @@
+Check out this README using Paintjob [here!](http://stolksdorf.github.io/PaintJob)
+
 # What is Paintjob?
 
 Paintjob is a project I built to easily create beautiful looking demo pages for my other projects. Github Readmes are pefect for documentation, but lack the ability to have interactive demos. So Paintjob uses a repo's readme file to build a beautiful page with navigation and relevent links, and generates runnable and interactive demo's using code blocks in the readme.
