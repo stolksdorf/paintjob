@@ -16,6 +16,16 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 	{
 		var self = this;
 
+		//Used for testing if I want to grab the local readme.md instead of the repos
+		if(this.projectData.use_local){
+			$.get('readme.md', function(result){
+				self.projectData.readme = result;
+				self.projectData.name = self.projectData.display_name || self.projectData.repo;
+				self.render();
+			});
+			return this;
+		}
+
 		$.ajax({
 			url : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
 			type : 'GET',
@@ -30,15 +40,6 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 				if(typeof self.projectData.readme !== 'undefined'){self.render();}
 			}
 		});
-
-		//Used for testing if I want to grab the local readme.md instead of the repos
-		if(this.projectData.use_local){
-			$.get('readme.md', function(result){
-				self.projectData.readme = result;
-				if(typeof self.projectData.name !== 'undefined'){self.render();}
-			});
-			return this;
-		}
 
 		$.ajax({
 			url : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
@@ -75,6 +76,10 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 	{
 		var newHTML = new Markdown.Converter().makeHtml(markdown);
 		newHTML = newHTML.replace(/<h1>/g, '</div><div class="docblock"><h1>' );
+
+		//Cut out anything above the first header.
+		//This allows for a link to the paintjob page on the repo README
+		newHTML = newHTML.substring(newHTML.indexOf('<div class="docblock"><h1>'));
 		this.dom.documentation.html(newHTML + '</div>');
 		return this;
 	},

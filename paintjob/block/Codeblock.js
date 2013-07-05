@@ -12,7 +12,7 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 			block : this.getSchematic()
 		};
 
-		var code = preCodeElement.html();
+		var code = preCodeElement.text();
 		preCodeElement.parent().replaceWith(this.dom.block);
 		this.getElements();
 
@@ -35,8 +35,6 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 	{
 		var self = this;
 
-		this.dom.output.attr('id', this.id);
-
 		if(!this.projectData.runnable_code_blocks){
 			this.dom.runButton.hide();
 			this.dom.outputContainer.hide();
@@ -53,20 +51,25 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 	{
 		var self = this;
 
-		codeBlockHtml =jQuery('[data-schematic="code_html"]').html();
+		var codeBlockHtml        = jQuery('[data-schematic="code_html"]');
+		var codeBlockHtmlElement = jQuery(jQuery('<div>').append(codeBlockHtml.clone().removeAttr('data-schematic')).html());
 
-		if(codeBlockHtml && codeBlockHtml !== ""){
-			this.dom.output.html(codeBlockHtml)
+		if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
+			this.dom.output.replaceWith(codeBlockHtmlElement);
+			this.dom.output = codeBlockHtmlElement;
+			this.dom.output.show().attr('id', this.id);
+			this.dom.outputError.hide()
 			this.dom.outputContainer.show();
 		} else{
 			this.dom.outputContainer.hide();
 		}
 
 		try{
-			eval('(function(){var example = $("#' + this.id + '");'+self.editor.getValue()+'})();');
+			eval('(function(){var example = $("#' + self.id + '");'+self.editor.getValue()+'})();');
 		}catch(e){
 			self.dom.outputContainer.show();
-			self.dom.output.html('<div class="codeblock__output__errorText">' + e.toString() + '</div>');
+			self.dom.output.hide();
+			self.dom.outputError.html(e.toString()).show();
 		}
 
 		return this;
