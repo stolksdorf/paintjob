@@ -65,6 +65,7 @@ code{
 	font-family: 'Courier', mono;
 	color:black;
 	white-space: pre;
+	background-color: #F8F8F8;
 }
 
 a{
@@ -75,6 +76,9 @@ a:hover{
 	font-weight: bold;
 }
 
+strong{
+	font-weight: bold;
+}
 
 
 /* BUTTONS */

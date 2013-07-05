@@ -56,7 +56,6 @@
 	</div>
 
 	<!-- Schematics -->
-
 	<a data-schematic='project_icon' target='_blank' class='project__icon card btn hint--bottom'>
 		<i data-element='iconElement'></i>
 	</a>
@@ -76,11 +75,10 @@
 <!-- Libraries -->
 <script type="text/javascript" src="paintjob/libs/jq.js"></script>
 <script type="text/javascript" src="paintjob/libs/underscore.js"></script>
-<script type="text/javascript" src="paintjob/libs/moment.js"></script>
 <script type="text/javascript" src="paintjob/libs/archetype.js"></script>
 <script type="text/javascript" src="paintjob/libs/markdownconvertor.js"></script>
-<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <link rel="Stylesheet" type="text/css" href="paintjob/libs/hint.css" />
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 <!-- CodeMirror -->
 <script src="paintjob/libs/codemirror/cm.js"></script>
@@ -124,6 +122,8 @@
 
 <script>
 	CreatePaintJob({
+		use_local : false,
+
 		user :'USERNAME',
 		repo :'REPO',
 
@@ -147,8 +147,14 @@
 			{
 				icon_class : 'icon-code',
 				color      : 'steel',
-				link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/FILE.html',
+				link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/FILE',
 				tooltip    : 'View Raw'
+			},
+			{
+				icon_class : 'icon-download-alt',
+				color      : 'orange',
+				link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/PRODFILE',
+				tooltip    : 'Get Production Version'
 			},
 			{
 				icon_class : 'icon-home',
