@@ -207,6 +207,10 @@ body{
 			display: block;
 		}
 
+		.sideBar:hover .sideBar__nav__item{
+			display: block;
+		}
+
 
 .footer{
 	z-index : 10;
