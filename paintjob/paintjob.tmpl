@@ -1,5 +1,4 @@
 <%
-	//Top banner
 	print('<!-- Complied into a single resource for remote fetching -->\n');
 	print('<!-- '
 		+ grunt.config('pkg.name')
@@ -16,10 +15,10 @@
 
 <%
 	//Inject the compiled js and css
-	var css = grunt.config('allCss')
+	var css = grunt.config('buildCssFile')
 	print('<style>\n' + grunt.file.read(css) + '\n</style>')
 
-	var js = grunt.config('allJs')
+	var js = grunt.config('buildJsFile')
 	print('<script>\n ' + grunt.file.read(js) + ' \n</script>')
 %>
 <div class='container' data-block='project'>

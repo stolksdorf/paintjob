@@ -3,34 +3,23 @@
 <head>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 	<script src="http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.min.js" ></script>
+	<script>var PaintJob=function(e){$(document).ready(function(){$.ajax({url:"https://raw.github.com/stolksdorf/Paintjob/master/paintjob.compiled.html",success:function(t){$("body").append(t);Object.create(PaintJob_Block_Project).initialize(e)}})})}</script>
 </head>
 <body></body>
 </html>
 
-<script>
+<!--
+	*****************************************
+	****        PROJECT CODE HERE        ****
+	*****************************************
+-->
 
-
-	var PaintJob = function(projectData){
-		$(document).ready(function(){
-			$.ajax({
-				url : 'https://dl.dropboxusercontent.com/u/562800/index.html',
-				success : function(paintjobFramework){
-					$('body').append(paintjobFramework);
-					CreatePaintJob(projectData);
-				}
-			});
-		});
-	}
-</script>
-
-
-<!-- Defination -->
 <script>
 	PaintJob({
 		use_local : false, //Used for testing when I'm editing the local README
 
 		user :'stolksdorf',
-		repo :'JsonGen',
+		repo :'REPO',
 
 		logo_class : 'icon-question',
 		logo_color : 'orange',
@@ -40,25 +29,25 @@
 			{
 				icon_class : 'icon-github',
 				color      : 'blue',
-				link       : 'https://github.com/stolksdorf/JsonGen',
+				link       : 'https://github.com/stolksdorf/REPO',
 				tooltip    : 'View on Github'
 			},
 			{
 				icon_class : 'icon-code-fork',
 				color      : 'green',
-				link       : 'https://github.com/stolksdorf/JsonGen/fork',
+				link       : 'https://github.com/stolksdorf/REPO/fork',
 				tooltip    : 'Fork on Github'
 			},
 			{
 				icon_class : 'icon-code',
 				color      : 'steel',
-				link       : 'https://raw.github.com/stolksdorf/JsonGen/BRANCH/FILE',
+				link       : 'https://raw.github.com/stolksdorf/REPO/BRANCH/FILE',
 				tooltip    : 'View Raw'
 			},
 			{
 				icon_class : 'icon-download-alt',
 				color      : 'orange',
-				link       : 'https://raw.github.com/stolksdorf/JsonGen/BRANCH/PRODFILE',
+				link       : 'https://raw.github.com/stolksdorf/REPO/BRANCH/PRODFILE',
 				tooltip    : 'Get Production Version'
 			},
 			{
@@ -70,11 +59,11 @@
 
 		],
 
-		///* Code Blocks */
-		runnable_code_blocks : true, //Adds the run buttn to code blocks in your readme
-		show_html_example    : true, //Shows a html demo under each code block
+		/* Code Blocks */
+		runnable_code_blocks : false, //Adds the run buttn to code blocks in your readme
+		show_html_example    : false, //Shows a html demo under each code block
 
-		///* Example */
+		/* Example */
 		example_initialize : function(){
 			//This code will be ran once the example html is loaded
 			//Use it to start animations or run demos
@@ -82,7 +71,7 @@
 	});
 </script>
 
-<!-- Schematics -->
+<!-- Project Schematics -->
 <!-- This html will be use for each code example in your project -->
 <div data-schematic='code_html'>
 	<!-- HTML code for your code block demos go in here -->
