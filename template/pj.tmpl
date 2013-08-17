@@ -4,18 +4,23 @@
 	print('<!-- '
 		+ grunt.config('pkg.name')
 		+ ' - v' + grunt.config('pkg.version')
-		+ ' - ' + grunt.template.today("yyyy-mm-dd") + '-->\n\n');
+		+ ' - ' + grunt.template.today("yyyy-mm-dd") + '-->');
 %>
+
 <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+
+<link href='http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.css' rel='stylesheet'>
+
+
 <%
 	//Inject the compiled js and css
 	var css = grunt.config('allCss')
 	print('<style>\n' + grunt.file.read(css) + '\n</style>')
 
 	var js = grunt.config('allJs')
-	print('<script>\n' + grunt.file.read(js) + '\n</script>')
+	print('<script>\n ' + grunt.file.read(js) + ' \n</script>')
 %>
 <div class='container' data-block='project'>
 	<div class='sideBar' data-block='sideBar'>
@@ -86,4 +91,3 @@
 	<div class='codeblock__runButton btn green' data-element='runButton'>Run</div>
 	<div style='clear:both'></div>
 </div>
-

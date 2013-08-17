@@ -14,7 +14,10 @@ module.exports = function(grunt) {
 					separator: '\n'
 				},
 				src: [
-					'paintjob/style/*.css'
+					'paintjob/libs/*.css',
+					'paintjob/style/reset.css',
+					'paintjob/style/base.css',
+					'paintjob/style/paintjob.css'
 				],
 				dest: '<%= allCss %>'
 			},
@@ -23,8 +26,9 @@ module.exports = function(grunt) {
 					separator: ';'
 				},
 				src: [
-					'paintjob/block/Icon.js',
-					'paintjob/block/Sidebar.js'
+					'paintjob/libs/*.js',
+					'paintjob/block/*.js',
+					'paintjob/paintjob.js'
 				],
 				dest: '<%= allJs %>'
 			}
@@ -37,7 +41,7 @@ module.exports = function(grunt) {
 			}
 		},
 
-			cssmin: {
+		cssmin: {
 			combine: {
 				files: {
 				'<%= allCss %>': ['<%= allCss %>']
