@@ -1,0 +1,89 @@
+<%
+	//Top banner
+	print('<!-- Complied into a single resource for remote fetching -->\n');
+	print('<!-- '
+		+ grunt.config('pkg.name')
+		+ ' - v' + grunt.config('pkg.version')
+		+ ' - ' + grunt.template.today("yyyy-mm-dd") + '-->\n\n');
+%>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<%
+	//Inject the compiled js and css
+	var css = grunt.config('allCss')
+	print('<style>\n' + grunt.file.read(css) + '\n</style>')
+
+	var js = grunt.config('allJs')
+	print('<script>\n' + grunt.file.read(js) + '\n</script>')
+%>
+<div class='container' data-block='project'>
+	<div class='sideBar' data-block='sideBar'>
+		<div class='sideBar__logo card' data-element='logo'>
+			<i class='sideBar__logo__icon' data-element='logoIcon'></i>
+			<i class='sideBar__logo__up icon-arrow-up' data-element='logoUp'></i>
+		</div>
+		<div class='sideBar__nav' data-element='nav'></div>
+	</div>
+	<div class='project'>
+		<div class='project__main'>
+			<div class='project__name'             data-element='name'></div>
+			<div class='project__description grey' data-element='description'></div>
+			<div class='project__icons'            data-element='iconContainer'></div>
+		</div>
+
+		<div class='project__example' data-element='example'></div>
+	</div>
+	<div class='documentation' data-element='documentation'></div>
+</div>
+<div class='footer'>
+	<div class='footer__content'>
+		<div class='footer__about'>
+			<h3>About</h3>
+			<p>
+				This page was generated using <a href='google.com'>Paintjob</a>, a framework that converts Github repos into beautiful demo pages.
+			</p>
+			<p>
+				Everything you see here was written by Scott Tolksdorf. Check out more cool stuff below.
+			</p>
+			<p class='footer__about__icons'>
+				<a target='_blank' href='http://stolksdorf.com'><i class='icon-home'></i></a>
+				<a target='_blank' href="mailto:scott.tolksdorf@gmail.com"><i class='icon-envelope'></i></a>
+				<a target='_blank' href='https://github.com/stolksdorf' ><i class='icon-github'></i></a>
+				<a target='_blank' href='http://stolksdorf.throwww.com/'><i class='icon-pencil'></i></a>
+				<a target='_blank' href='https://twitter.com/stolksdorf'><i class='icon-twitter'></i></a>
+				<a target='_blank' href='https://www.facebook.com/scott.tolksdorf'><i class='icon-facebook'></i></a>
+				<a target='_blank' href='http://ca.linkedin.com/pub/scott-tolksdorf/19/132/53a'><i class='icon-linkedin'></i></a>
+			</p>
+		</div>
+
+		<div class='footer__license'>
+			<h2>License</h2>
+			<p>
+				All the work I release is under <a target='_blank' href='http://www.wtfpl.net'>WTFPL</a>.
+			</p>
+			<p>
+				I believe that the more open we are with information, the more innovation we'll see. In short, do whatever you want with this, just don't say that you made it.
+			</p>
+			<p>
+				Full license text <a target='_blank' href='http://www.wtfpl.net/txt/copying/'>here</a>.
+			</p>
+		</div>
+	</div>
+</div>
+
+<!-- Schematics -->
+<a data-schematic='project_icon' target='_blank' class='project__icon card btn hint--bottom'>
+	<i data-element='iconElement'></i>
+</a>
+
+<div class='codeblock' data-schematic='code_block' >
+	<div data-element='editor'></div>
+	<div class='codeblock__output' data-element='outputContainer' style='display:none'>
+		<div data-element='output'></div>
+		<div data-element='outputError' class='codeblock__output__errorText' style='display:none'></div>
+	</div>
+	<div class='codeblock__runButton btn green' data-element='runButton'>Run</div>
+	<div style='clear:both'></div>
+</div>
+
