@@ -18,11 +18,9 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 
 		//Used for testing if I want to grab the local readme.md instead of the repos
 		if(this.projectData.use_local){
-			$.get('readme.md', function(result){
-				self.projectData.readme = result;
-				self.projectData.name = self.projectData.display_name || self.projectData.repo;
-				self.render();
-			});
+			self.projectData.readme = $("script[type='text/template']").html();
+			self.projectData.name = self.projectData.display_name || self.projectData.repo;
+			self.render();
 			return this;
 		}
 
@@ -87,8 +85,15 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 	buildCodeBlocks : function()
 	{
 		var self = this;
+
+		var lastHtmlCodeblock;
 		this.dom.documentation.find('pre code').each(function(index, codeBlock){
-			Object.create(Paintjob_Block_Example).initialize($(codeBlock), index, self.projectData);
+			var tempCodeBlock = Object.create(Paintjob_Block_CodeBlock).initialize($(codeBlock), index, self.projectData);
+			if(tempCodeBlock.isHtml){
+				lastHtmlCodeblock = tempCodeBlock.code;
+			} else if(lastHtmlCodeblock){
+				tempCodeBlock.setHtmlExample(lastHtmlCodeblock);
+			}
 		});
 		return this;
 	},

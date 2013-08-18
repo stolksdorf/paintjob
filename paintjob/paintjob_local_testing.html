@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<body>
+	<div class='container' data-block='project'>
+		<div class='sideBar' data-block='sideBar'>
+			<div class='sideBar__logo card' data-element='logo'>
+				<i class='sideBar__logo__icon' data-element='logoIcon'></i>
+				<i class='sideBar__logo__up icon-arrow-up' data-element='logoUp'></i>
+			</div>
+			<div class='sideBar__nav' data-element='nav'></div>
+		</div>
+		<div class='project'>
+			<div class='project__main'>
+				<div class='project__name'             data-element='name'></div>
+				<div class='project__description grey' data-element='description'></div>
+				<div class='project__icons'            data-element='iconContainer'></div>
+			</div>
+
+			<div class='project__example' data-element='example'></div>
+		</div>
+		<div class='documentation' data-element='documentation'></div>
+	</div>
+	<div class='footer'>
+		<div class='footer__content'>
+			<div class='footer__about'>
+				<h3>About</h3>
+				<p>
+					This page was generated using <a href='google.com'>Paintjob</a>, a framework that converts Github repos into beautiful demo pages.
+				</p>
+				<p>
+					Everything you see here was written by Scott Tolksdorf. Check out more cool stuff below.
+				</p>
+				<p class='footer__about__icons'>
+					<a target='_blank' href='http://stolksdorf.com'><i class='icon-home'></i></a>
+					<a target='_blank' href="mailto:scott.tolksdorf@gmail.com"><i class='icon-envelope'></i></a>
+					<a target='_blank' href='https://github.com/stolksdorf' ><i class='icon-github'></i></a>
+					<a target='_blank' href='http://stolksdorf.throwww.com/'><i class='icon-pencil'></i></a>
+					<a target='_blank' href='https://twitter.com/stolksdorf'><i class='icon-twitter'></i></a>
+					<a target='_blank' href='https://www.facebook.com/scott.tolksdorf'><i class='icon-facebook'></i></a>
+					<a target='_blank' href='http://ca.linkedin.com/pub/scott-tolksdorf/19/132/53a'><i class='icon-linkedin'></i></a>
+				</p>
+			</div>
+
+			<div class='footer__license'>
+				<h2>License</h2>
+				<p>
+					All the work I release is under <a target='_blank' href='http://www.wtfpl.net'>WTFPL</a>.
+				</p>
+				<p>
+					I believe that the more open we are with information, the more innovation we'll see. In short, do whatever you want with this, just don't say that you made it.
+				</p>
+				<p>
+					Full license text <a target='_blank' href='http://www.wtfpl.net/txt/copying/'>here</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Schematics -->
+	<a data-schematic='project_icon' target='_blank' class='project__icon card btn hint--bottom'>
+		<i data-element='iconElement'></i>
+	</a>
+
+	<div class='codeblock' data-schematic='code_block' >
+		<div data-element='editor'></div>
+		<div class='codeblock__output' data-element='outputContainer' style='display:none'>
+			<div data-element='output'></div>
+			<div data-element='outputError' class='codeblock__output__errorText' style='display:none'></div>
+		</div>
+		<div class='codeblock__runButton btn green' data-element='runButton'>Run</div>
+		<div style='clear:both'></div>
+	</div>
+
+</body>
+
+<!-- Libraries -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+<script src="http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.min.js" ></script>
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+<link href='http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.css' rel='stylesheet'>
+
+<script type="text/javascript" src="libs/archetype.js"></script>
+<script type="text/javascript" src="libs/markdownconvertor.js"></script>
+<link rel="Stylesheet" type="text/css" href="libs/hint.css" />
+
+<!-- CodeMirror -->
+<script src="libs/codemirror-javascript.js"></script>
+<script src="libs/codemirror-xml.js"></script>
+<script src="libs/codemirror-css.js"></script>
+<script src="libs/codemirror-html.js"></script>
+<script src="libs/scroll.js"></script>
+
+<!-- Style -->
+<link rel="Stylesheet" type="text/css" href="style/reset.css" />
+<link rel="Stylesheet" type="text/css" href="style/base.css" />
+<link rel="Stylesheet" type="text/css" href="style/paintjob.css" />
+
+<script type="text/javascript" src="block/Project.js"></script>
+<script type="text/javascript" src="block/Icon.js"></script>
+<script type="text/javascript" src="block/Codeblock.js"></script>
+<script type="text/javascript" src="block/Sidebar.js"></script>
+
+
+
+<!--
+
+	*****************************************
+	****        PROJECT CODE HERE        ****
+	*****************************************
+-->
+
+
+<!-- This html will be use for each code example in your project -->
+<div data-schematic='code_html'>
+	<!-- HTML code for your code block demos go in here -->
+</div>
+
+<!-- This html will be use for the example at the top of the page -->
+<div data-schematic='example_html'>
+	<!-- HTML code for your example goes in here -->
+</div>
+
+<script>
+	$(document).ready(function(){
+		Object.create(PaintJob_Block_Project).initialize({
+			use_local : true, //Used for testing when I'm editing the local README
+
+			user :'USERNAME',
+			repo :'REPO',
+
+			logo_class : 'icon-question',
+			logo_color : 'orange',
+
+			/* Project Icons */
+			icons : [
+				{
+					icon_class : 'icon-github',
+					color      : 'blue',
+					link       : 'https://github.com/USERNAME/REPO',
+					tooltip    : 'View on Github'
+				},
+				{
+					icon_class : 'icon-code-fork',
+					color      : 'green',
+					link       : 'https://github.com/USERNAME/REPO/fork',
+					tooltip    : 'Fork on Github'
+				},
+				{
+					icon_class : 'icon-code',
+					color      : 'steel',
+					link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/FILE',
+					tooltip    : 'View Raw'
+				},
+				{
+					icon_class : 'icon-download-alt',
+					color      : 'orange',
+					link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/PRODFILE',
+					tooltip    : 'Get Production Version'
+				},
+				{
+					icon_class : 'icon-home',
+					color      : 'red',
+					link       : 'https://github.com/USERNAME',
+					tooltip    : 'Check out more cool things'
+				}
+
+			],
+
+			/* Code Blocks */
+			runnable_code_blocks : true, //Adds the run buttn to code blocks in your readme
+			show_html_example    : true, //Shows a html demo under each code block
+
+			/* Example */
+			example_initialize : function(){
+				//This code will be ran once the example html is loaded
+				//Use it to start animations or run demos
+			},
+		});
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/template">
+Check out this project using Paintjob [here!](http://stolksdorf.github.io/Paintjob)
+
+# What is Paintjob?
+Paintjob is a easy way to create beautiful looking demo pages for my other projects. Github READMEs are perfect for documentation, but lack the ability to have interactive demos. So Paintjob uses a repo's README file to build a beautiful page with navigation and relevent links, and generates runnable and interactive demo's using code blocks in the README.
+
+To use Paintjob, simply drop the folder into the `gh-pages` branch of a new project, configure the project data in the `index.html`, and add whatever necessary js files needed to run the demos.
+
+# Project Data
+Each project has it's own unique project data object. It defines the user, the repo, where links should go, and how demos should work. Here's an example of it
+
+
+
+	<div class="test">
+		Awesome
+	</div>
+
+
+And the code
+
+	{
+		user :'USERNAME',
+		repo :'REPO',
+
+		logo_class : 'icon-question',
+		logo_color : 'orange',
+
+		/* Project Icons */
+		icons : [
+			{
+				icon_class : 'icon-github',
+				color      : 'blue',
+				link       : 'https://github.com/USERNAME/REPO',
+				tooltip    : 'View on Github'
+			},
+			{
+				icon_class : 'icon-code-fork',
+				color      : 'green',
+				link       : 'https://github.com/USERNAME/REPO/fork',
+				tooltip    : 'Fork on Github'
+			},
+			{
+				icon_class : 'icon-code',
+				color      : 'steel',
+				link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/FILE.html',
+				tooltip    : 'View Raw'
+			},
+			{
+				icon_class : 'icon-home',
+				color      : 'red',
+				link       : 'https://github.com/USERNAME',
+				tooltip    : 'Check out more cool things'
+			}
+
+		],
+
+		/* Code Blocks */
+		runnable_code_blocks : false, //Adds the run buttn to code blocks in your README
+		show_html_example    : false, //Shows a html demo under each code block
+
+		/* Example */
+		example_initialize : function(){
+			//This code will be ran once the example html is loaded
+			//Use it to start animations or run demos
+		},
+	}
+
+# Title and Description
+Paintjob uses the [Github API](http://developer.github.com/), to pull out the repo's title, description, and it's `README`. The title and description are injected, and the readme is processed to generated the rest of the content.
+
+# Content and Navigation
+The README is parsed from Markdown into HTML, then each `<h1>` tag is grouped together into the colored sections you see. I use these sections to build out the navigation on the left.
+
+# Code Blocks
+Paintjob will then parse through the content and find code blocks defined with `<pre>` and `<code>`.It converts each of these into instances of [CodeMirror](http://codemirror.net/), which the user can edit. If desired, I can set these code blocks to be runnable using `eval`.
+
+If the project requires html elements for the example to use and modify, I define this html in the project data, which is copied and injected for each code block. A specific scoped reference to that element is exposed in the scope of the eval under the variable name `example`, allowing that code block to only effect that html element and no other ones on the page.
+
+# Footer
+The footer is simply static that I want to have on each of my projects. It outlines the licenses I use, as well as a few links to the rest of my resources.
+
+</script>
+
+</html>

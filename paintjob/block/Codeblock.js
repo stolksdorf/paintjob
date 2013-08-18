@@ -1,4 +1,4 @@
-Paintjob_Block_Example = Object.create(Block).blueprint({
+Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 	schematic : 'code_block',
 
 	initialize : function(preCodeElement, id, projectData)
@@ -12,16 +12,19 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 			block : this.getSchematic()
 		};
 
-		var code = preCodeElement.text();
+		this.code = preCodeElement.text();
+		//Check for html
+		if(this.code[0] === '<'){
+			this.isHtml = true;
+		}
 		preCodeElement.parent().replaceWith(this.dom.block);
 		this.getElements();
-
 
 		this.editor = CodeMirror(function(elt) {
 			self.dom.editor[0].parentNode.replaceChild(elt, self.dom.editor[0]);
 		}, {
-			value          : code,
-			mode           : 'javascript',
+			value          : self.code,
+			mode           : (self.isHtml ? 'htmlmixed' : 'javascript'),
 			viewportMargin : Infinity,
 			lineNumbers    : true,
 			matchBrackets  : true,
@@ -34,8 +37,7 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 	render : function()
 	{
 		var self = this;
-
-		if(!this.projectData.runnable_code_blocks){
+		if(!this.projectData.runnable_code_blocks || this.isHtml){
 			this.dom.runButton.hide();
 			this.dom.outputContainer.hide();
 			return this;
@@ -47,21 +49,24 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 		return this;
 	},
 
+	setHtmlExample : function(test)
+	{
+		this.htmlExample = test;
+		return this;
+	},
+
 	executeCodeBlock : function()
 	{
 		var self = this;
-
 		var codeBlockHtml        = jQuery('[data-schematic="code_html"]');
 		var codeBlockHtmlElement = jQuery(jQuery('<div>').append(codeBlockHtml.clone().removeAttr('data-schematic')).html());
 
-		if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
-			this.dom.output.replaceWith(codeBlockHtmlElement);
-			this.dom.output = codeBlockHtmlElement;
-			this.dom.output.show().attr('id', this.id);
-			this.dom.outputError.hide()
-			this.dom.outputContainer.show();
-		} else{
-			this.dom.outputContainer.hide();
+		this.dom.outputContainer.hide();
+
+		if(this.htmlExample){
+			this.setExampleHtml(jQuery(this.htmlExample));
+		} else if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
+			this.setExampleHtml(codeBlockHtmlElement);
 		}
 
 		try{
@@ -74,4 +79,16 @@ Paintjob_Block_Example = Object.create(Block).blueprint({
 
 		return this;
 	},
+
+	setExampleHtml : function(htmlCodeElement)
+	{
+		this.dom.output.replaceWith(htmlCodeElement);
+		this.dom.output = htmlCodeElement;
+		this.dom.output.show().attr('id', this.id);
+		this.dom.outputError.hide()
+		this.dom.outputContainer.show();
+		return this;
+	},
+
+
 });
