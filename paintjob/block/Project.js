@@ -90,7 +90,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 		this.dom.documentation.find('pre code').each(function(index, codeBlock){
 			var tempCodeBlock = Object.create(Paintjob_Block_CodeBlock).initialize($(codeBlock), index, self.projectData);
 			if(tempCodeBlock.isHtml){
-				lastHtmlCodeblock = tempCodeBlock.code;
+				lastHtmlCodeblock = tempCodeBlock;
 			} else if(lastHtmlCodeblock){
 				tempCodeBlock.setHtmlExample(lastHtmlCodeblock);
 			}

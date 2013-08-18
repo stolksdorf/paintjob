@@ -64,7 +64,8 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		this.dom.outputContainer.hide();
 
 		if(this.htmlExample){
-			this.setExampleHtml(jQuery(this.htmlExample));
+			console.log(this.htmlExample.editor.getValue());
+			this.setExampleHtml(jQuery(this.htmlExample.editor.getValue()));
 		} else if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
 			this.setExampleHtml(codeBlockHtmlElement);
 		}
