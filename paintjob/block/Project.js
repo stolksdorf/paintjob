@@ -73,7 +73,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 	buildDocumentation : function(markdown)
 	{
 		var newHTML = new Markdown.Converter().makeHtml(markdown);
-		newHTML = newHTML.replace(/<h1>/g, '</div><div class="docblock"><h1>' );
+		newHTML = newHTML.replace(/<h1>/g, '</div><div class="docblock"><h1>');
 
 		//Cut out anything above the first header.
 		//This allows for a link to the paintjob page on the repo README
