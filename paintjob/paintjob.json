@@ -1,12 +1,8 @@
 {
-	"use_local" : false,
-
-	/* Should be un-needed */
-	"user" :"stolksdorf",
-	"repo" :"REPO",
-
 	"logo_class" : "icon-question",
 	"logo_color" : "orange",
+
+	"example_image" : "http://i.imgur.com/Mlpfb.gif",
 
 	/* Project Icons */
 	"icons" : [

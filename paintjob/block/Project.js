@@ -1,46 +1,96 @@
-PaintJob_Block_Project = Object.create(Block).blueprint({
+Paintjob = Object.create(Block).blueprint({
 	block : 'project',
 
-	initialize : function(projectData)
+	start : function(TestData)
 	{
-		this.projectData = projectData;
-		this.dom = {
-			block : jQuery('[data-block="' + this.block + '"]')
+		var self = this;
+		this.TestMode = !!TestData;
+		this.projectData = TestData || {};
+
+		//get user and repo from URL
+		if(!this.TestMode){
+			this.projectData.user = document.URL.split('.')[0];
+			this.projectData.repo = document.URL.split('/')[1];
+		}
+
+		this.urls = {
+			prod : {
+				repo   : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
+				readme : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
+				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/paintjob.json?ref=master'
+			},
+			testing : {
+				repo   : undefined,
+				readme : 'readme.md',
+				config : 'paintjob.json'
+			},
 		};
-		this.getElements();
-		this.fetchRepoData();
+
+
+		$(document).ready(function(){
+			self.dom = {
+				block : jQuery('[data-block="' + self.block + '"]')
+			};
+			self.getElements();
+			self.fetchRemoteData();
+		});
 		return this;
 	},
 
-	fetchRepoData : function()
+	fetchRemoteData : function()
 	{
 		var self = this;
 
-		//Used for testing if I want to grab the local readme.md instead of the repos
-		if(this.projectData.use_local){
-			self.projectData.readme = $("script[type='text/template']").html();
-			self.projectData.name = self.projectData.display_name || self.projectData.repo;
-			self.render();
-			return this;
+		var urls = this.urls.prod;
+		if(this.TestMode){
+			urls = this.urls.testing;
 		}
 
+		//called whenever one of the ajax calls finishes
+		var finished = function(){
+
+
+		}
+
+
+
 		$.ajax({
-			url : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
+			url : urls.config,
 			type : 'GET',
 			error  : function(result){
 				console.error(result.responseText);
 				alert('There was an error gathering the repo data\n\n' + result.responseText);
 			},
-			success : function(result){
-				self.projectData.name        = result.name;
-				self.projectData.github_url  = result.owner.html_url;
-				self.projectData.description = result.description;
-				if(typeof self.projectData.readme !== 'undefined'){self.render();}
+			success : function(data){
+				//we might decode
+
+				eval("var result = " + data);
+				_.extend(self.projectData, result);
 			}
 		});
 
+
+
+		if(urls.repo){
+			$.ajax({
+				url : urls.repo,
+				type : 'GET',
+				error  : function(result){
+					console.error(result.responseText);
+					alert('There was an error gathering the repo data\n\n' + result.responseText);
+				},
+				success : function(result){
+					self.projectData.name        = result.name;
+					self.projectData.github_url  = result.owner.html_url;
+					self.projectData.description = result.description;
+					if(typeof self.projectData.readme !== 'undefined'){self.render();}
+				}
+			});
+		}
+
+
 		$.ajax({
-			url : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
+			url : urls.readme,
 			type : 'GET',
 			headers: { 'Accept': 'application/vnd.github.raw' },
 			error  : function(result){
@@ -49,9 +99,15 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 			},
 			success : function(result){
 				self.projectData.readme = result;
-				if(typeof self.projectData.name !== 'undefined'){self.render();}
+				//if(typeof self.projectData.name !== 'undefined'){self.render();}
+				self.render();
 			}
 		});
+		return this;
+	},
+
+	remoteCall : function(url, callback){
+
 		return this;
 	},
 
@@ -115,6 +171,8 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 
 	buildExample : function()
 	{
+
+		/*
 		exampleHtml =jQuery('[data-schematic="example_html"]').html();
 
 		if(exampleHtml && exampleHtml !== ""){
@@ -123,7 +181,7 @@ PaintJob_Block_Project = Object.create(Block).blueprint({
 		if(typeof this.projectData.example_initialize === 'function'){
 			this.projectData.example_initialize();
 		}
-
+*/
 		return this;
 	},
 

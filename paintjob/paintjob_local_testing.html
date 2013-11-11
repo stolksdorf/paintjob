@@ -104,6 +104,10 @@
 
 
 
+<script id = 'TEST' type="type/javascript" src="paintjob.json"></script>
+
+
+
 <!--
 
 	*****************************************
@@ -123,62 +127,14 @@
 </div>
 
 <script>
-	$(document).ready(function(){
-		Object.create(PaintJob_Block_Project).initialize({
-			use_local : true, //Used for testing when I'm editing the local README
+	var testing_data = {
+		user :'USERNAME',
+		repo :'REPO',
+		name : 'REPO',
+		description : 'Coolest Test Ever'
+	}
 
-			user :'USERNAME',
-			repo :'REPO',
-
-			logo_class : 'icon-question',
-			logo_color : 'orange',
-
-			/* Project Icons */
-			icons : [
-				{
-					icon_class : 'icon-github',
-					color      : 'blue',
-					link       : 'https://github.com/USERNAME/REPO',
-					tooltip    : 'View on Github'
-				},
-				{
-					icon_class : 'icon-code-fork',
-					color      : 'green',
-					link       : 'https://github.com/USERNAME/REPO/fork',
-					tooltip    : 'Fork on Github'
-				},
-				{
-					icon_class : 'icon-code',
-					color      : 'steel',
-					link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/FILE',
-					tooltip    : 'View Raw'
-				},
-				{
-					icon_class : 'icon-download-alt',
-					color      : 'orange',
-					link       : 'https://raw.github.com/USERNAME/REPO/BRANCH/PRODFILE',
-					tooltip    : 'Get Production Version'
-				},
-				{
-					icon_class : 'icon-home',
-					color      : 'red',
-					link       : 'https://github.com/USERNAME',
-					tooltip    : 'Check out more cool things'
-				}
-
-			],
-
-			/* Code Blocks */
-			runnable_code_blocks : true, //Adds the run buttn to code blocks in your readme
-			show_html_example    : true, //Shows a html demo under each code block
-
-			/* Example */
-			example_initialize : function(){
-				//This code will be ran once the example html is loaded
-				//Use it to start animations or run demos
-			},
-		});
-	});
+	Paintjob.start(testing_data);
 </script>
 
 
@@ -214,7 +170,7 @@
 
 
 
-
+<!--
 
 <script type="text/template">
 Check out this project using Paintjob [here!](http://stolksdorf.github.io/Paintjob)
@@ -298,5 +254,7 @@ If the project requires html elements for the example to use and modify, I defin
 The footer is simply static that I want to have on each of my projects. It outlines the licenses I use, as well as a few links to the rest of my resources.
 
 </script>
+
+-->
 
 </html>
