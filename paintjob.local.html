@@ -1,17 +1,56 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<body>
-	<div class='container' data-block='project'>
+<head>
 
+	<!-- Libraries -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+	<script src="http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.min.js" ></script>
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+	<link href='http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.css' rel='stylesheet'>
+
+	<script type="text/javascript" src="paintjob/libs/archetype.js"></script>
+	<script type="text/javascript" src="paintjob/libs/base64.js"></script>
+	<script type="text/javascript" src="paintjob/libs/markdownconvertor.js"></script>
+	<link rel="Stylesheet" type="text/css" href="paintjob/libs/hint.css" />
+
+	<!-- CodeMirror -->
+	<script src="paintjob/libs/codemirror-javascript.js"></script>
+	<script src="paintjob/libs/codemirror-xml.js"></script>
+	<script src="paintjob/libs/codemirror-css.js"></script>
+	<script src="paintjob/libs/codemirror-html.js"></script>
+	<script src="paintjob/libs/scroll.js"></script>
+
+	<!-- Style -->
+	<link rel="Stylesheet" type="text/css" href="paintjob/style/reset.css" />
+	<link rel="Stylesheet" type="text/css" href="paintjob/style/base.css" />
+	<link rel="Stylesheet" type="text/css" href="paintjob/style/paintjob.css" />
+
+	<script type="text/javascript" src="paintjob/block/Project.js"></script>
+	<script type="text/javascript" src="paintjob/block/Icon.js"></script>
+	<script type="text/javascript" src="paintjob/block/Codeblock.js"></script>
+	<script type="text/javascript" src="paintjob/block/Sidebar.js"></script>
+</head>
+<body>
+
+	<script>
+		var testing_data = {
+			user        : 'USERNAME',
+			repo        : 'REPO',
+			name        : 'REPO',
+			description : 'Coolest Test Ever'
+		};
+		Paintjob.start(testing_data);
+		//Paintjob.start();
+	</script>
+
+	<div class='container' data-block='project'>
 		<div class='error'>
 			Oops <br>
 			<p>There was an error loading this project :(</p>
 		</div>
-
 		<img class='spinner' src='http://i.imgur.com/8Co9fCd.gif'></img>
-
-
-
 		<div class='sideBar' data-block='sideBar'>
 			<div class='sideBar__logo card' data-element='logo'>
 				<i class='sideBar__logo__icon' data-element='logoIcon'></i>
@@ -25,8 +64,6 @@
 				<div class='project__description grey' data-element='description'></div>
 				<div class='project__icons'            data-element='iconContainer'></div>
 			</div>
-
-
 		</div>
 		<img class='project__example' data-element='example'></img>
 		<div class='documentation' data-element='documentation'></div>
@@ -84,57 +121,4 @@
 	</div>
 
 </body>
-
-<!-- Libraries -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-<script src="http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.min.js" ></script>
-<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-<link href='http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.css' rel='stylesheet'>
-
-<script type="text/javascript" src="libs/archetype.js"></script>
-<script type="text/javascript" src="libs/base64.js"></script>
-<script type="text/javascript" src="libs/markdownconvertor.js"></script>
-<link rel="Stylesheet" type="text/css" href="libs/hint.css" />
-
-<!-- CodeMirror -->
-<script src="libs/codemirror-javascript.js"></script>
-<script src="libs/codemirror-xml.js"></script>
-<script src="libs/codemirror-css.js"></script>
-<script src="libs/codemirror-html.js"></script>
-<script src="libs/scroll.js"></script>
-
-<!-- Style -->
-<link rel="Stylesheet" type="text/css" href="style/reset.css" />
-<link rel="Stylesheet" type="text/css" href="style/base.css" />
-<link rel="Stylesheet" type="text/css" href="style/paintjob.css" />
-
-<script type="text/javascript" src="block/Project.js"></script>
-<script type="text/javascript" src="block/Icon.js"></script>
-<script type="text/javascript" src="block/Codeblock.js"></script>
-<script type="text/javascript" src="block/Sidebar.js"></script>
-
-
-
-
-<!--
-
-	*****************************************
-	****        PROJECT CODE HERE        ****
-	*****************************************
--->
-
-
-<script>
-	var testing_data = {
-		user        : 'USERNAME',
-		repo        : 'REPO',
-		name        : 'REPO',
-		description : 'Coolest Test Ever'
-	}
-
-	Paintjob.start(testing_data);
-</script>
-
 </html>

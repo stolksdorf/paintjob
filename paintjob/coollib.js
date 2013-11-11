@@ -1,1 +1,0 @@
-var SOCOOL = 'awesome;'

@@ -17,13 +17,13 @@ Paintjob = Object.create(Block).blueprint({
 			prod : {
 				repo   : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
 				readme : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
-				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/contents/paintjob.json?ref=master',
+				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/contents/paintjob-config.json',
 				scripts: 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/contents/'
 			},
 			testing : {
 				repo   : undefined,
 				readme : 'readme.md',
-				config : 'paintjob.json',
+				config : 'paintjob-config.json',
 				scripts: ''
 			},
 		};
