@@ -1,6 +1,6 @@
 {
-	"icon_class" : "icon-question",
-	"icon_color" : "blue",
+	"icon_class" : "icon-tint",
+	"icon_color" : "orange",
 	//"example_image" : "http://i.imgur.com/Mlpfb.gif",
 
 	"runnable_code_blocks" : false,
@@ -18,28 +18,27 @@
 		{
 			"icon_class" : "icon-github",
 			"color"      : "blue",
-			"link"       : "https://github.com/stolksdorf/REPO",
+			"link"       : "https://github.com/stolksdorf/Paintjob",
 			"tooltip"    : "View on Github"
 		},
 		{
 			"icon_class" : "icon-code-fork",
 			"color"      : "green",
-			"link"       : "https://github.com/stolksdorf/REPO/fork",
+			"link"       : "https://github.com/stolksdorf/Paintjob/fork",
 			"tooltip"    : "Fork on Github"
 		},
 		{
 			"icon_class" : "icon-code",
 			"color"      : "steel",
-			"link"       : "https://raw.github.com/stolksdorf/REPO/BRANCH/FILE",
+			"link"       : "https://raw.github.com/stolksdorf/Paintjob/master/paintjob.local.html",
 			"tooltip"    : "View Raw"
 		},
-		/*
 		{
 			"icon_class" : "icon-download-alt",
 			"color"      : "orange",
-			"link"       : "https://raw.github.com/stolksdorf/REPO/BRANCH/PRODFILE",
+			"link"       : "https://raw.github.com/stolksdorf/Paintjob/master/paintjob.compiled.html",
 			"tooltip"    : "Get Production Version"
-		},*/
+		},
 		{
 			"icon_class" : "icon-home",
 			"color"      : "red",
