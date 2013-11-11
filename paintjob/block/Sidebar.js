@@ -5,8 +5,8 @@ PaintJob_Block_Sidebar = Object.create(Block).blueprint({
 	{
 		this.super('initialize');
 
-		this.dom.logo.addClass(projectData.logo_color);
-		this.dom.logoIcon.addClass(projectData.logo_class);
+		this.dom.logo.addClass(projectData.icon_color);
+		this.dom.logoIcon.addClass(projectData.icon_class);
 
 		return this;
 	},

@@ -17,15 +17,16 @@ Paintjob = Object.create(Block).blueprint({
 			prod : {
 				repo   : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
 				readme : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
-				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/paintjob.json?ref=master'
+				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/paintjob.json?ref=master',
+				scripts: 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/'
 			},
 			testing : {
 				repo   : undefined,
 				readme : 'readme.md',
-				config : 'paintjob.json'
+				config : 'paintjob.json',
+				scripts: ''
 			},
 		};
-
 
 		$(document).ready(function(){
 			self.dom = {
@@ -42,9 +43,7 @@ Paintjob = Object.create(Block).blueprint({
 		var self = this;
 
 		var urls = this.urls.prod;
-		if(this.TestMode){
-			urls = this.urls.testing;
-		}
+		if(this.TestMode) urls = this.urls.testing;
 
 		//called whenever one of the ajax calls finishes
 		var finished = function(){
@@ -62,10 +61,13 @@ Paintjob = Object.create(Block).blueprint({
 				alert('There was an error gathering the repo data\n\n' + result.responseText);
 			},
 			success : function(data){
-				//we might decode
-
+				if(data.content){
+					data = Base64.decode(data);
+				}
 				eval("var result = " + data);
 				_.extend(self.projectData, result);
+
+				//Check for additional scripts
 			}
 		});
 
@@ -118,6 +120,7 @@ Paintjob = Object.create(Block).blueprint({
 
 		this.sideBar = Object.create(PaintJob_Block_Sidebar).initialize(this.projectData);
 
+		document.title = this.projectData.name;
 		this.buildDocumentation(this.projectData.readme);
 		this.buildCodeBlocks();
 		this.buildNav();

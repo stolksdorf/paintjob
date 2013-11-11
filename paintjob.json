@@ -1,14 +1,12 @@
 {
-	"use_local" : false,
+	"icon_class" : "icon-question",
+	"icon_color" : "orange",
+	"example_image" : "http://i.imgur.com/Mlpfb.gif",
 
-	/* Should be un-needed */
-	"user" :"stolksdorf",
-	"repo" :"REPO",
+	"runnable_code_blocks" : false,
+	"show_html_example"    : false,
+	"scripts"              : ["coollib.js"],
 
-	"logo_class" : "icon-question",
-	"logo_color" : "orange",
-
-	/* Project Icons */
 	"icons" : [
 		{
 			"icon_class" : "icon-github",
@@ -42,8 +40,4 @@
 		}
 
 	],
-
-	/* Code Blocks */
-	"runnable_code_blocks" : false, //Adds the run buttn to code blocks in your readme
-	"show_html_example"    : false, //Shows a html demo under each code block
 }
