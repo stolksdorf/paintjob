@@ -1,7 +1,7 @@
 {
 	"icon_class" : "icon-question",
-	"icon_color" : "orange",
-	"example_image" : "http://i.imgur.com/Mlpfb.gif",
+	"icon_color" : "blue",
+	//"example_image" : "http://i.imgur.com/Mlpfb.gif",
 
 	"runnable_code_blocks" : false,
 	"show_html_example"    : false,
@@ -26,12 +26,13 @@
 			"link"       : "https://raw.github.com/stolksdorf/REPO/BRANCH/FILE",
 			"tooltip"    : "View Raw"
 		},
+		/*
 		{
 			"icon_class" : "icon-download-alt",
 			"color"      : "orange",
 			"link"       : "https://raw.github.com/stolksdorf/REPO/BRANCH/PRODFILE",
 			"tooltip"    : "Get Production Version"
-		},
+		},*/
 		{
 			"icon_class" : "icon-home",
 			"color"      : "red",
