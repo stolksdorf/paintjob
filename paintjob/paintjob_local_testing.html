@@ -2,6 +2,16 @@
 <html>
 <body>
 	<div class='container' data-block='project'>
+
+		<div class='error'>
+			Oops <br>
+			<p>There was an error loading this project :(</p>
+		</div>
+
+		<img class='spinner' src='http://i.imgur.com/8Co9fCd.gif'></img>
+
+
+
 		<div class='sideBar' data-block='sideBar'>
 			<div class='sideBar__logo card' data-element='logo'>
 				<i class='sideBar__logo__icon' data-element='logoIcon'></i>
@@ -21,6 +31,7 @@
 		<img class='project__example' data-element='example'></img>
 		<div class='documentation' data-element='documentation'></div>
 	</div>
+
 	<div class='footer'>
 		<div class='footer__content'>
 			<div class='footer__about'>
@@ -83,6 +94,7 @@
 <link href='http://cdn.jsdelivr.net/codemirror/3.14.0/codemirror.css' rel='stylesheet'>
 
 <script type="text/javascript" src="libs/archetype.js"></script>
+<script type="text/javascript" src="libs/base64.js"></script>
 <script type="text/javascript" src="libs/markdownconvertor.js"></script>
 <link rel="Stylesheet" type="text/css" href="libs/hint.css" />
 
@@ -122,7 +134,7 @@
 		description : 'Coolest Test Ever'
 	}
 
-	Paintjob.start();
+	Paintjob.start(testing_data);
 </script>
 
 </html>

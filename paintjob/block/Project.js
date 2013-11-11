@@ -17,8 +17,8 @@ Paintjob = Object.create(Block).blueprint({
 			prod : {
 				repo   : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo,
 				readme : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/readme',
-				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/paintjob.json?ref=master',
-				scripts: 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + 'contents/'
+				config : 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/contents/paintjob.json?ref=master',
+				scripts: 'https://api.github.com/repos/' + this.projectData.user + '/' + this.projectData.repo + '/contents/'
 			},
 			testing : {
 				repo   : undefined,
@@ -45,80 +45,91 @@ Paintjob = Object.create(Block).blueprint({
 		var urls = this.urls.prod;
 		if(this.TestMode) urls = this.urls.testing;
 
-		//called whenever one of the ajax calls finishes
-		var finished = function(){
 
+		this.remoteCall(urls.config, function(config){
+			if(config.content) config = Base64.decode(config.content);
+			eval("var result = " + config);
+			_.extend(self.projectData, result);
 
-		}
-
-
-
-		$.ajax({
-			url : urls.config,
-			type : 'GET',
-			error  : function(result){
-				console.error(result.responseText);
-				alert('There was an error gathering the repo data\n\n' + result.responseText);
-			},
-			success : function(data){
-				if(data.content){
-					data = Base64.decode(data);
-				}
-				eval("var result = " + data);
-				_.extend(self.projectData, result);
-
-				//Check for additional scripts
+			if(self.projectData.scripts){
+				self.fetchScripts(urls, self.projectData.scripts);
 			}
 		});
 
+		this.remoteCall(urls.repo, function(repoData){
+			self.projectData.name        = repoData.name;
+			self.projectData.github_url  = repoData.owner.html_url;
+			self.projectData.description = repoData.description;
+		});
 
+		this.remoteCall(urls.readme, function(readme){
+			self.projectData.readme = readme;
+		});
 
-		if(urls.repo){
-			$.ajax({
-				url : urls.repo,
-				type : 'GET',
-				error  : function(result){
-					console.error(result.responseText);
-					alert('There was an error gathering the repo data\n\n' + result.responseText);
-				},
-				success : function(result){
-					self.projectData.name        = result.name;
-					self.projectData.github_url  = result.owner.html_url;
-					self.projectData.description = result.description;
-					if(typeof self.projectData.readme !== 'undefined'){self.render();}
-				}
+		return this;
+	},
+
+	fetchScripts : function(urls, scripts){
+		var self = this;
+		for(var i in scripts){
+			self.remoteCall(urls.scripts + scripts[i], function(script){
+				if(script.content) script = Base64.decode(script.content);
+				//try to create script
+				var s = document.createElement('script');
+				s.type = 'text/javascript';
+				s.appendChild(document.createTextNode(script));
+				s.text = script;
+				document.body.appendChild(s);
 			});
 		}
+		return this;
+	},
 
-
+	remoteCall : function(url, callback){
+		if(!url) return this;
+		var self = this;
+		this.asyncTracking(1);
 		$.ajax({
-			url : urls.readme,
+			url : url,
 			type : 'GET',
 			headers: { 'Accept': 'application/vnd.github.raw' },
 			error  : function(result){
-				console.error(result.responseText);
-				alert('There was an error gathering the repo readme\n\n' + result.responseText);
+				self.asyncTracking(0, result);
 			},
-			success : function(result){
-				self.projectData.readme = result;
-				//if(typeof self.projectData.name !== 'undefined'){self.render();}
-				self.render();
+			success : function(data){
+				callback(data);
+				self.asyncTracking(-1);
 			}
 		});
 		return this;
 	},
 
-	remoteCall : function(url, callback){
+	asyncTracking : function(val, error){
+		this.asyncError = this.asyncError || false;
+		this.numCurrentCalls = this.numCurrentCalls || 0;
 
+		if(error) {
+			this.asyncError = error;
+			console.error(error);
+			$('.spinner').hide();
+			$('.error').show();
+		}
+		if(this.asyncError)	return this;
+		this.numCurrentCalls += val;
+		if(this.numCurrentCalls === 0){
+			this.render();
+		}
 		return this;
 	},
 
 	render : function(){
 		var self = this;
+		$('.spinner').hide();
 		this.dom.name.html(this.projectData.name);
 		this.dom.description.html(this.projectData.description);
 
 		this.sideBar = Object.create(PaintJob_Block_Sidebar).initialize(this.projectData);
+		$('.sideBar').show();
 
 		document.title = this.projectData.name;
 		this.buildDocumentation(this.projectData.readme);
