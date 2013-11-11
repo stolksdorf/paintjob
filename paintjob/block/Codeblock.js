@@ -62,6 +62,8 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		this.dom.outputContainer.hide();
 		if(this.htmlExample){
 			this.createExampleHtml(jQuery('<div>').append(this.htmlExample.editor.getValue()));
+		}else{
+			this.createExampleHtml(jQuery('<div>'));
 		}
 
 		try{
@@ -77,6 +79,7 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 
 	createExampleHtml : function(htmlCodeElement)
 	{
+		if(!this.projectData.show_html_example) return this;
 		this.dom.output.replaceWith(htmlCodeElement);
 		this.dom.output = htmlCodeElement;
 		this.dom.output.show().attr('id', this.id);

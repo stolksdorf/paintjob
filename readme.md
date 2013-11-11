@@ -5,6 +5,8 @@ Paintjob is a easy way to create beautiful looking demo pages for my other proje
 
 To use Paintjob, simply drop the folder into the `gh-pages` branch of a new project, configure the project data in the `index.html`, and add whatever necessary js files needed to run the demos.
 
+	$(example).html("So cool!");
+
 # Project Data
 Each project has it's own unique project data object. It defines the user, the repo, where links should go, and how demos should work. Here's an example of it
 
