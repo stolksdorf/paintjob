@@ -9,8 +9,9 @@ Paintjob = Object.create(Block).blueprint({
 
 		//get user and repo from URL
 		if(!this.TestMode){
-			this.projectData.user = document.URL.split('.')[0];
-			this.projectData.repo = document.URL.split('/')[1];
+			var temp = document.URL.split('/');
+			this.projectData.user = temp[2].split('.')[0];
+			this.projectData.repo = temp[temp.length-2];
 		}
 
 		this.urls = {
