@@ -171,17 +171,9 @@ Paintjob = Object.create(Block).blueprint({
 
 	buildExample : function()
 	{
-
-		/*
-		exampleHtml =jQuery('[data-schematic="example_html"]').html();
-
-		if(exampleHtml && exampleHtml !== ""){
-			this.dom.example.html(exampleHtml);
+		if(this.projectData.example_image){
+			this.dom.example.attr('src', this.projectData.example_image);
 		}
-		if(typeof this.projectData.example_initialize === 'function'){
-			this.projectData.example_initialize();
-		}
-*/
 		return this;
 	},
 
