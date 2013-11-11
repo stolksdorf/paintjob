@@ -3,6 +3,17 @@ body{
 	font-family : 'Lato', sans-serif;
 }
 
+ol{
+	list-style-type: decimal;
+}
+ul{
+	list-style-type: disc;
+}
+li{
+	margin-left: 30px;
+	margin-top: 10px;
+}
+
 .container{
 	max-width      : 960px;
 	margin-right   : auto;

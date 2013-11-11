@@ -7,6 +7,13 @@
 	"show_html_example"    : false,
 	"scripts"              : [],
 
+	"local" : {
+		"user"        : "stolksdorf",
+		"repo"        : "paintjob",
+		"name"        : "Paintjob",
+		"description" : "This is just some sample text for when I'm local testing"
+	},
+
 	"icons" : [
 		{
 			"icon_class" : "icon-github",

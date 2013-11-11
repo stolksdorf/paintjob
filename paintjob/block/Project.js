@@ -1,11 +1,12 @@
 Paintjob = Object.create(Block).blueprint({
 	block : 'project',
 
-	start : function(TestData)
+	start : function()
 	{
 		var self = this;
-		this.TestMode = !!TestData;
-		this.projectData = TestData || {};
+		this.projectData = {};
+
+		this.TestMode = document.URL.indexOf('file') === 0;
 
 		//get user and repo from URL
 		if(!this.TestMode){
@@ -126,6 +127,13 @@ Paintjob = Object.create(Block).blueprint({
 	render : function(){
 		var self = this;
 		$('.spinner').hide();
+
+		if(this.projectData.local){
+			_.each(['user','repo','name','description'], function(prop){
+				self.projectData[prop] = self.projectData[prop] || self.projectData.local[prop];
+			});
+		}
+
 		this.dom.name.html(this.projectData.name);
 		this.dom.description.html(this.projectData.description);
 
