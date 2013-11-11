@@ -20,6 +20,7 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		preCodeElement.parent().replaceWith(this.dom.block);
 		this.getElements();
 
+
 		this.editor = CodeMirror(function(elt) {
 			self.dom.editor[0].parentNode.replaceChild(elt, self.dom.editor[0]);
 		}, {
@@ -64,8 +65,8 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		this.dom.outputContainer.hide();
 
 		if(this.htmlExample){
-			console.log(this.htmlExample.editor.getValue());
-			this.setExampleHtml(jQuery(this.htmlExample.editor.getValue()));
+			//console.log(this.htmlExample.editor.getValue());
+			this.setExampleHtml(jQuery('<div>').append(this.htmlExample.editor.getValue()));
 		} else if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
 			this.setExampleHtml(codeBlockHtmlElement);
 		}
