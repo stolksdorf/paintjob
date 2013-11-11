@@ -145,10 +145,12 @@ Paintjob = Object.create(Block).blueprint({
 		var lastHtmlCodeblock;
 		this.dom.documentation.find('pre code').each(function(index, codeBlock){
 			var tempCodeBlock = Object.create(Paintjob_Block_CodeBlock).initialize($(codeBlock), index, self.projectData);
+
+			//If the code block is html, set it up for the next JS code block to use it
 			if(tempCodeBlock.isHtml){
 				lastHtmlCodeblock = tempCodeBlock;
 			} else if(lastHtmlCodeblock){
-				tempCodeBlock.setHtmlExample(lastHtmlCodeblock);
+				tempCodeBlock.setExampleCode(lastHtmlCodeblock);
 			}
 		});
 		return this;

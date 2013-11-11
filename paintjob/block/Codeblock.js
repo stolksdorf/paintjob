@@ -50,7 +50,7 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		return this;
 	},
 
-	setHtmlExample : function(test)
+	setExampleCode : function(test)
 	{
 		this.htmlExample = test;
 		return this;
@@ -59,16 +59,9 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 	executeCodeBlock : function()
 	{
 		var self = this;
-		var codeBlockHtml        = jQuery('[data-schematic="code_html"]');
-		var codeBlockHtmlElement = jQuery(jQuery('<div>').append(codeBlockHtml.clone().removeAttr('data-schematic')).html());
-
 		this.dom.outputContainer.hide();
-
 		if(this.htmlExample){
-			//console.log(this.htmlExample.editor.getValue());
-			this.setExampleHtml(jQuery('<div>').append(this.htmlExample.editor.getValue()));
-		} else if(codeBlockHtmlElement && codeBlockHtmlElement !== ""){
-			this.setExampleHtml(codeBlockHtmlElement);
+			this.createExampleHtml(jQuery('<div>').append(this.htmlExample.editor.getValue()));
 		}
 
 		try{
@@ -82,7 +75,7 @@ Paintjob_Block_CodeBlock = Object.create(Block).blueprint({
 		return this;
 	},
 
-	setExampleHtml : function(htmlCodeElement)
+	createExampleHtml : function(htmlCodeElement)
 	{
 		this.dom.output.replaceWith(htmlCodeElement);
 		this.dom.output = htmlCodeElement;
