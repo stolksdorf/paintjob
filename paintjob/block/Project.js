@@ -1,3 +1,24 @@
+var _ = _ ||{
+	extend : function(){
+		var result = {};
+		for(var i in arguments){
+			var obj = arguments[i];
+			for(var propName in obj){
+				if(obj.hasOwnProperty(propName)){ result[propName] = obj[propName]; }
+			}
+		}
+		return result;
+	},
+	map : function(obj, fn){
+		var result = [];
+		for(var propName in obj){
+			if(obj.hasOwnProperty(propName)){ result.push(fn(obj[propName], propName)); }
+		}
+		return result;
+	}
+};
+
+
 Paintjob = Object.create(Block).blueprint({
 	block : 'project',
 
@@ -51,7 +72,7 @@ Paintjob = Object.create(Block).blueprint({
 		this.remoteCall(urls.config, function(config){
 			if(config.content) config = Base64.decode(config.content);
 			eval("var result = " + config);
-			_.extend(self.projectData, result);
+			self.projectData = _.extend(self.projectData, result);
 
 			if(self.projectData.scripts){
 				self.fetchScripts(urls, self.projectData.scripts);
@@ -129,7 +150,7 @@ Paintjob = Object.create(Block).blueprint({
 		$('.spinner').hide();
 
 		if(this.projectData.local){
-			_.each(['user','repo','name','description'], function(prop){
+			_.map(['user','repo','name','description'], function(prop){
 				self.projectData[prop] = self.projectData[prop] || self.projectData.local[prop];
 			});
 		}
@@ -141,6 +162,9 @@ Paintjob = Object.create(Block).blueprint({
 		$('.sideBar').show();
 
 		document.title = this.projectData.name;
+		$(window).bind("load", function() {
+			FontAwesomeFavicon(self.projectData.icon_class);
+		});
 		this.buildDocumentation(this.projectData.readme);
 		this.buildCodeBlocks();
 		this.buildNav();
@@ -205,7 +229,7 @@ Paintjob = Object.create(Block).blueprint({
 	buildIcons : function()
 	{
 		var self = this;
-		_.each(this.projectData.icons, function(iconData){
+		_.map(this.projectData.icons, function(iconData){
 			Object.create(PaintJob_Block_Icon)
 				.initialize(iconData)
 				.injectInto(self.dom.iconContainer);
