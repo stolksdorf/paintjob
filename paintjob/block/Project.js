@@ -45,7 +45,7 @@ Paintjob = Object.create(Block).blueprint({
 			},
 			testing : {
 				repo   : undefined,
-				readme : 'readme.md',
+				readme : 'readme.md', //Change to README
 				config : 'paintjob-config.json',
 				scripts: ''
 			},
