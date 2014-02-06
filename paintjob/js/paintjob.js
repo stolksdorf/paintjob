@@ -20,9 +20,10 @@ Paintjob = xo.view.extend({
 
 
 		if(this.projectData.local){
-			_.map(['user','repo','name','description'], function(prop){
+			_.map(['user','repo','description'], function(prop){
 				self.projectData[prop] = self.projectData[prop] || self.projectData.local[prop];
 			});
+			self.projectData.name = self.projectData.local.name || self.projectData.name;
 		}
 
 		this.dom.name.html(this.projectData.name);
