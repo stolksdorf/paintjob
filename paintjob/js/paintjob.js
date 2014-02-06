@@ -50,7 +50,7 @@ Paintjob = xo.view.extend({
 		var self = this;
 		for(var i in this.projectData.scripts){
 			$.ajax({
-				url : 'https://api.github.com/repos/' + self.projectData.user + '/' + self.projectData.repo + '/contents/' + this.projectData.scripts[i],
+				url : this.projectData.urls.scripts + this.projectData.scripts[i],
 				type : 'GET',
 				headers: { 'Accept': 'application/vnd.github.raw' },
 				success : function(script){
