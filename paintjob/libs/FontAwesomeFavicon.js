@@ -43,8 +43,8 @@ FontAwesomeFavicon = function(iconName){
 		var iconChar = FAtoChar(iconName);
 		if(!iconChar) return;
 		var url = charToIconUrl(iconChar);
+		if(url == 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAyklEQVRoQ+2ZwQmAMBAEo7XZgF1Yg034shybEvx7YgOZQILEEfLbJO7scg8dUifP0ImPpJGvJWkiJlKJgNWqBLb4WBMpRldpo4lUAlt87G8TGQPZHmspRpe3cQrZkSd9VTSRx8gWa411kYuAdg7tqZFMYiaSCeqRWS0AK1ktQMtqAVhWi8CyWoSWUwvQsloAllOLwLJahJZTC9CyWgCWU4vAslqEllML0LJaAJZTi8CyWoRWN1/jiemmWvpboenLkcs0Qmi10HaTyA36YHgzqZSIngAAAABJRU5ErkJggg==') return;
 		iconUrlToFavicon(url);
 		clearInterval(timeout);
 	}, 10);
-
 };
