@@ -34,7 +34,7 @@ CodeBlockComponent = xo.view.extend({
 		this.editor = CodeMirror(function(elt) {
 			self.dom.editor[0].parentNode.replaceChild(elt, self.dom.editor[0]);
 		}, {
-			value          : self.code,
+			value          : self.code.trim(),
 			mode           : (self.isHtml ? 'htmlmixed' : 'javascript'),
 			viewportMargin : Infinity,
 			lineNumbers    : true,
@@ -42,7 +42,8 @@ CodeBlockComponent = xo.view.extend({
 			tabMode        : 'indent'
 		});
 
-		this.editor.setValue(this.code);
+		this.editor.setValue(this.code.trim());
+
 
 		setTimeout(function(){
 			this.editor.refresh();

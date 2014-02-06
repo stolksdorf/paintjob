@@ -1,22 +1,4 @@
 
-<%
-	print('<!-- Complied into a single resource for easy installing -->\n');
-	print('<!-- '
-		+ grunt.config('pkg.name')
-		+ ' - v' + grunt.config('pkg.version')
-		+ ' - ' + grunt.template.today("yyyy-mm-dd") + '-->');
-%>
-
-<%
-	//Inject the compiled js and css
-	var css = grunt.config('buildCssFile')
-	print('<style>\n' + grunt.file.read(css) + '\n</style>')
-
-	var js = grunt.config('buildJsFile')
-	print('<script>\n ' + grunt.file.read(js) + ' \n</script>')
-%>
-
-<!--
 <script type="text/javascript" src="paintjob/libs/FontAwesomeFavicon.js"></script>
 <script type="text/javascript" src="paintjob/libs/archetype.js"></script>
 <script type="text/javascript" src="paintjob/libs/markdownconvertor.js"></script>
@@ -41,7 +23,9 @@
 <script type="text/javascript" src="paintjob/js/Codeblock.js"></script>
 <script type="text/javascript" src="paintjob/js/Sidebar.js"></script>
 <script type="text/javascript" src="paintjob/js/paintjob.js"></script>
--->
+
+
+
 
 <div class='container' xo-view='paintjob'>
 	<div class='error'>
