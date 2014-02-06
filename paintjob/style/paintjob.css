@@ -169,7 +169,6 @@ li{
 
 
 .sideBar{
-	display   : none;
 	position    : absolute;
 	top         : 150px;
 
@@ -202,7 +201,7 @@ li{
 	}
 
 		.sideBar__nav__item{
-			display        : none;
+			display   : none;
 			z-index        : 3;
 
 			width          : 130px;
@@ -215,6 +214,9 @@ li{
 			text-align     : right;
 			text-transform : uppercase;
 			border-left    : 10px solid transparent;
+
+			transition: 0.25s;
+			-webkit-transition: 0.25s;
 		}
 
 		.sideBar__nav__item:hover{

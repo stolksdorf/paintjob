@@ -38,7 +38,13 @@ FontAwesomeFavicon = function(iconName){
 		document.head.appendChild(favIcon);
 	};
 
-	var iconChar = FAtoChar(iconName);
-	var url = charToIconUrl(iconChar);
-	iconUrlToFavicon(url);
+
+	var timeout = setInterval(function(){
+		var iconChar = FAtoChar(iconName);
+		if(!iconChar) return;
+		var url = charToIconUrl(iconChar);
+		iconUrlToFavicon(url);
+		clearInterval(timeout);
+	}, 10);
+
 };

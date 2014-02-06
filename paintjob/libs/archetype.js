@@ -1,274 +1,89 @@
-(function(){
+;(function(){
+	//Shim for Object.create, in case the browser doesn't support it
+	Object.create = Object.create || function(proto) {
+		function Obj(){};
+		Obj.prototype = proto;
+		return new Obj();
+	};
+	var archetype_EventCount = new Date().getTime();
 
-	Archetype = {
+	Archetype = archetype ={
 		initialize : function(){
 			return this;
 		},
-		blueprint : function(methods){
+		create : function(){
+			var obj = this.extend();
+			obj.deep('initialize').apply(obj, arguments);
+			obj.trigger('created', obj); //remove? test with presto
+			return obj;
+		},
+		extend : function(methods){
+			var obj = Object.create(this);
+			obj.events = obj._events.bind({storedEvents : []});
+			return obj.mixin(methods);
+		},
+		mixin : function(methods){
 			for(var methodName in methods){
 				this[methodName] = methods[methodName];
 			}
-			this.__blueprint__ = this;
 			return this;
 		},
-
-		//Experimental
-		extend : function(methods)
-		{
-			return Object.create(this).blueprint(methods);
+		deep : function(method){
+			var self = this;
+			var deep = function(){
+				if(this[method]) deep.apply(Object.getPrototypeOf(this), arguments);
+				if(this.hasOwnProperty(method)) return this[method].apply(self, arguments);
+			};
+			return deep.bind(this);
 		},
 
-
-		super : function(methodName){
-			return Object.getPrototypeOf(this.__blueprint__)[methodName].apply(this, Array.prototype.slice.apply(arguments).slice(1));
+		//Events
+		_events : function(set, add){
+			if(set) this.storedEvents = set;
+			if(add) this.storedEvents.push(add);
+			return this.storedEvents;
 		},
-
-		on : function(eventName, event){
-			this.__events__ = this.__events__ || {};
-			this.__events__[eventName] = this.__events__[eventName] || [];
-			this.__events__[eventName].push(event);
-			return this;
+		on : function(eventName, event, once){
+			this.events(undefined, {
+				id    : ++archetype_EventCount,
+				name  : eventName,
+				fn    : event,
+				fireOnce  : once || false
+			});
+			return archetype_EventCount;
 		},
-		trigger : function(eventName){
-			if(this.__muted__){return;}
-			this.__events__ = this.__events__ || {};
-			if(this.__events__[eventName]){
-				for(var i = 0; i < this.__events__[eventName].length; i++) {
-					this.__events__[eventName][i].apply(this, Array.prototype.slice.apply(arguments).slice(1));
+		once : function(eventName, event){
+			return this.on(eventName, event, true);
+		},
+		trigger : function(eventIdentifier){
+			var evts = this.events();
+			var args = [].slice.apply(arguments).slice(1);
+			for(var i in evts){
+				var evt = evts[i];
+				if(eventIdentifier == evt.id || eventIdentifier == evt.name){
+					evt.fn.apply(this, args);
+					if(evt.fireOnce) this.off(evt.id);
+				}
+				//Add ability to pass event name in
+				if(evt.name === '*'){
+					//TODO: add the evenbt identifier to the args array and push that through
+					args.unshift(eventIdentifier);
+					evt.fn.apply(this, args);
 				}
 			}
 			return this;
 		},
-		mute : function(){
-			this.__muted__ = true;
-			return this;
-		},
-		unmute : function(){
-			this.__muted__ = false;
-			return this;
-		},
-	};
-
-	/*********************************************
-						PROMISE
-	**********************************************/
-	Promise = Object.create(Archetype).blueprint({
-
-		then : function(success, fail)
-		{
-			try{
-
-
-			}catch(error){
-				if(typeof fail === 'function'){fail(error);}
+		off : function(eventIdentifier){
+			if(!eventIdentifier) this.events([]); //Clear the events if nothing provided
+			var remainingEvents = []
+			for(var i in this.events()){
+				var evt = this.events()[i];
+				if(eventIdentifier != evt.id && eventIdentifier != evt.name){
+					remainingEvents.push(evt);
+				}
 			}
-
-			return this;
-		},
-
-		and : function(success, fail)
-		{
-
-			return this;
-		},
-
-
-
-	});
-
-
-
-	/*********************************************
-						MODEL
-	**********************************************/
-	Model = Object.create(Archetype).blueprint({
-		defaults : {},
-		initialize : function(attributes)
-		{
-			this.reset(attributes);
-			return this;
-		},
-		get : function(attrName)
-		{
-			return this.attributes[attrName];
-		},
-		set : function(attrName, val)
-		{
-			this.attributes[attrName] = val;
-			this.trigger('change:'+attrName);
-			this.trigger('change');
-			return this;
-		},
-		has : function(attrName)
-		{
-			return typeof this.attributes[attrName] !== 'undefined';
-		},
-		toJSON : function()
-		{
-			return JSON.stringify(this.attributes);
-		},
-		reset : function(newAttributes)
-		{
-			this.attributes = this.defaults;
-			for(var attrName in newAttributes){
-				this.attributes[attrName] = newAttributes[attrName];
-			}
-			this.trigger('reset');
+			this.events(remainingEvents);
 			return this;
 		}
-	});
-
-	/*********************************************
-						COLLECTION
-	**********************************************/
-	Collection = Object.create(Archetype).blueprint({
-		model : Model,
-
-		initialize : function(modelData)
-		{
-			this.reset(modelData);
-			return this;
-		},
-		add : function(modelData)
-		{
-			var newModel = modelData;
-			if(!(modelData instanceof this.model)){
-				newModel = Object.create(this.model).initialize(modelData);
-			}
-			this.models.push(newModel);
-			this.trigger('add', newModel);
-			return this;
-		},
-		remove : function(modelId)
-		{
-			if(modelId instanceof this.model){
-				modelId = modelId.get('id');
-			}
-			for(var i=0;i<this.models.length;i++){
-				if(this.models[i].get('id') === modelId){
-					this.models.splice(i,1);
-					this.trigger('remove', this.models[i]);
-					return this;
-				}
-			}
-			return this;
-		},
-		reset : function(modelData)
-		{
-			this.models = [];
-			for (var i=0;i<modelData.length;i++){
-				this.add(modelData[i]);
-			}
-			this.trigger('reset');
-			return this;
-		},
-		map : function(fn)
-		{
-			var result = [];
-			for(var i=0;i<this.models.length;i++){
-				result.push(fn(this.models[i]));
-			}
-			return result;
-		},
-		reduce : function(fn, memo)
-		{
-			for(var i=0;i<this.models.length;i++){
-				memo = fn(this.models[i], memo);
-			}
-			return memo;
-		},
-		toJSON : function()
-		{
-			return this.map(function(model){
-				return model.toJSON();
-			});
-		},
-	});
-
-
-	/*********************************************
-						BLOCK
-	**********************************************/
-
-
-	Block = Object.create(Archetype).blueprint({
-		block     : '',
-		schematic : '',
-
-		initialize : function()
-		{
-			this.dom = this.dom || {};
-			if(this.block !== ''){
-				this.dom.block = jQuery('[data-block="' + this.block + '"]');
-				this.getElements();
-				this.render();
-			}
-			return this;
-		},
-
-		injectInto : function(injectionPoint)
-		{
-			this.dom = this.dom || {};
-			this.trigger('before:inject', this);
-			this.dom.block       = this.getSchematic().appendTo(injectionPoint);
-
-			this.getElements().render();
-			this.trigger('inject', this);
-			return this;
-		},
-
-		getSchematic : function()
-		{
-			var schematicElement = jQuery('[data-schematic="' + this.schematic + '"]');
-			var schematicCode    = jQuery('<div>').append(schematicElement.clone().removeAttr('data-schematic')).html();
-			return jQuery(schematicCode);
-		},
-
-		getElements : function()
-		{
-			var self = this;
-			this.dom.block.find('[data-element]').each(function(index, element){
-				element = jQuery(element);
-				self.dom[element.data('element')] = element;
-			});
-			return this;
-		},
-
-		render : function()
-		{
-			return this;
-		},
-
-		mapActions : function(actionMap)
-		{
-			for(var key in actionMap){
-				var elementName = key.split(' ')[0];
-				var actionName  = key.split(' ')[1];
-				this.dom[elementName].on(actionName, actionMap[key]);
-			}
-			return this;
-		},
-	});
-
-/*
-	hideSchematics = function(){
-		var css = document.createElement("style");
-		css.type = "text/css";
-		css.innerHTML = '[data-schematic]{display :none !important;}';
-
-		alert(typeof document.body);
-
-		document.body.appendChild(css);
-	}();
-
-	*/
+	};
 })();
-
-
-
-
-
-
-
-
-

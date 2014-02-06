@@ -1,5 +1,5 @@
 {
-	"icon_class" : "icon-rocket",
+	"icon_class" : "icon-tint",
 	"icon_color" : "orange",
 	//"example_image" : "http://i.imgur.com/Mlpfb.gif",
 
@@ -26,7 +26,7 @@
 			"color"      : "green",
 			"link"       : "https://github.com/stolksdorf/Paintjob/fork",
 			"tooltip"    : "Fork on Github"
-		},
+		},/*
 		{
 			"icon_class" : "icon-code",
 			"color"      : "steel",
@@ -38,7 +38,7 @@
 			"color"      : "orange",
 			"link"       : "https://raw.github.com/stolksdorf/Paintjob/master/paintjob.compiled.html",
 			"tooltip"    : "Get Production Version"
-		},
+		},*/
 		{
 			"icon_class" : "icon-home",
 			"color"      : "red",

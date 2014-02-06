@@ -1,28 +1,17 @@
-PaintJob_Block_Sidebar = Object.create(Block).blueprint({
-	block : 'sideBar',
-
-	initialize : function(projectData)
-	{
-		this.super('initialize');
-
-		this.dom.logo.addClass(projectData.icon_color);
-		this.dom.logoIcon.addClass(projectData.icon_class);
-
-		return this;
-	},
+SidebarView = xo.view.extend({
+	view : 'sideBar',
 
 	render : function()
 	{
 		var self = this;
 
-		this.dom.block.sticky(150);
-
+		this.dom.view.sticky(150);
 		this.dom.logo.click(function(){
 			$('body').scrollTo();
 		});
 
 		this.dom.logo.mouseover(function(){
-			if(self.dom.block.hasClass('stuck')){
+			if(self.dom.view.hasClass('stuck')){
 				self.dom.logoIcon.hide();
 				self.dom.logoUp.show();
 			}
@@ -30,6 +19,9 @@ PaintJob_Block_Sidebar = Object.create(Block).blueprint({
 			self.dom.logoIcon.show();
 			self.dom.logoUp.hide();
 		});
+
+		this.dom.logo.addClass(this.model.icon_color);
+		this.dom.logoIcon.addClass(this.model.icon_class);
 
 		return this;
 	},

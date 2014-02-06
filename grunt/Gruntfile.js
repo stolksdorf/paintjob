@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 				},
 				src: [
 					'../paintjob/libs/*.js',
-					'../paintjob/block/*.js',
+					'../paintjob/js/*.js',
 				],
 				dest: '<%= buildJsFile %>'
 			}
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 		},
 
 		htmlTemplate : {
-			src: '../paintjob/paintjob.tmpl',
+			src: '../paintjob.html',
 			dest: '../paintjob.compiled.html'
 		},
 
