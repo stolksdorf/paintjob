@@ -5,7 +5,7 @@
 
 	"runnable_code_blocks" : false,
 	"show_html_example"    : false,
-	"scripts"              : [],
+	"scripts"              : ["testScript.js"],
 
 	"local" : {
 		"user"        : "stolksdorf",
